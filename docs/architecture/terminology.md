@@ -70,7 +70,7 @@ Data center environment of the FinTech. Host the FinTechApi.
 ### FinTechApi
 Financial web service provided by the FinTech.
 
-### Psu2FintechLoginSessionCookie
+### Psu2FinTechLoginSessionCookie
 This is a cookie used to maintain the login session between the FinTechUI and the FinTechApi. As this maintains the login state of the PSU in the FinTechUI, this session can be kept open for the life span of the interaction between the FinTechUI and the FinTechApi.
 
 ### FinTech2TppRedirectionInfoPanel
@@ -83,13 +83,49 @@ Data center environment of the TPP
 Tpp backend providing access to ASPSP banking functionality. This interface is not directly accessed by the PSU but by the FinTechApi. FinTechApi will use a FinTech2TppContext to authenticate with the TppBankingApi.
 
 ### TppBankSearchApi
-Repository of banks maintained in the TPP's banking gateway. The banking search API will later presen an interface to configure profiles attached to listed banks
+Repository of banks maintained in the TPP's banking gateway. The banking search API will later presen an interface to configure profiles attached to listed banks.
+
+### BankDescriptor
+Descriptive information assocaited with a bank like:
+- The name of the Bank
+- The address of the bank
+- The bank identification code
+
+### BankProfile
+BankingApi profile information associated with a bank like:
+- The BankingProtocol used to connect with the bank
+- List of Banking services provided by the BankingApi of the bank
+- SCA approcahes associated with the BankingApi
+- ScaUIMetadaData: Screens and field used to collect user authentication data.
+- Actions to be performed by the PSU prior to using the BankingProtocol
+
+#### AisConsentSpec
+Specification associated with an AisConsent. This is highly dependent on the BankProfile. Following information might be carried by an AisConsentSpec object:
+- recurringIndicator
+- validUntil
+- frequencyPerDay
+- combinedService
+- accountAccessTemplate
+- availableAccounts[availableAccountsWithBalances, allAccounts]
+- allPsd2[allAccounts]
 
 ### FinTech2TppContext
 Information used to identify the FinTech application at the TppBankingApi. For example a FinTech SSL client certificate or an APIKey or an oAuth2 Password Grant Credential.
 
 ### FinTech2TppConsentSession
-Information associated with the consent as exchanged between the FinTechApi and the TppBankingApi. Containing ConsentData, authCode, TppConsentSessionApiRedirectUrl...
+Information associated with the consent as exchanged between the FinTechApi and the TppBankingApi. Generally contain:
+- Data needed to authorize the FinTechApi (FinTechSSLCertificate, ApiKey, SignedJWT)
+- Data needed to customize psu access at the TppConsentSessionApi (showInfoPanel, fintechStateHash)
+- Data needed to manage redirection of PSU from the TppConsentSession to the FintechUI like (FinTech-Redirect-URI, TPP-Nok-Redirect- URI, FinTech-Explicit- Authorisation- Preferred, FinTech-Content-Negotiation)
+
+Object also contains information associated with the PSU requesting service if available.
+- The identifier of the PSU in the realm of the Tpp FinTech2TppPsuIdentifier
+
+#### FinTechSSLCertificate, ApiKey, SignedJWT
+These are credential used by a FinTech to identify themself at the interface of a TppBankingApi. This identifiers are obtained in negotiontiation between FinTech and Tpp prior to accessing the TppBankingApi
+
+#### FinTech2TppPsuIdentifier
+This is the identifier of the PSU in the FinTech2Tpp relationship. This identifier can be saved once a consent has been sucessfully established to allow for reuse of existing consent in future sessions.
 
 ### Psu2TppConsentSessionCookie
 This is the cookie object used to maintain the consent session between the TppConsentSessionUI and the TppConsentSessionApi
@@ -133,3 +169,4 @@ This Cookie will be used by the ASPSP to keep a login session of the PSU over th
 
 ## ConsentData    
 Specification of the requested consent. BankAccount, frequencyPerDay, validUntil, ..., 
+

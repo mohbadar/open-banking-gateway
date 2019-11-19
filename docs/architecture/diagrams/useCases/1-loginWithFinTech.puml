@@ -29,7 +29,7 @@ end box
 psu -> FinTechUI ++ : loadFinTechApplication()
 return displayLoginUI()
 psu -> FinTechUI ++ : enterLoginData(login,password)
-FinTechUI -> FinTechAPI ++ : login[](login,password)<>
+FinTechUI -> FinTechApi ++ : login[](login,password)<>
 return 200_OK[Psu2FintechLoginSessionCookie](BankSearchScreenConfig)
 return displayBankSearchScreen()
 @enduml

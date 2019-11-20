@@ -16,13 +16,13 @@ box "TppDC" #LightGray
     participant "TppBankSearchApi" as TppBankSearchApi
     participant "TppConsentSessionApi" as TppConsentSessionApi
 
-    participant "RedirectSessionStoreAPI" as RedirectSessionStoreAPI
-    participant "BankingProtocolSelector" as BankingProtocolSelector
-    participant "BankingProtocol" as BankingProtocol
+    'participant "RedirectSessionStoreAPI" as RedirectSessionStoreAPI
+    'participant "BankingProtocolSelector" as BankingProtocolSelector
+    'participant "BankingProtocol" as BankingProtocol
 end box
 box "AspspDC" #LightSkyBlue
-	participant "AspspBankingApi" as AspspBankingApi
-    participant "AspspConsentSessionApi" as AspspConsentSessionApi
+	'participant "AspspBankingApi" as AspspBankingApi
+    'participant "AspspConsentSessionApi" as AspspConsentSessionApi
 end box
 
 == PSU searches a bank by keyword : call[header](body)<params> return code[header](body) ==
